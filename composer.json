@@ -1,0 +1,21 @@
+{
+    "name": "cf/gavoters",
+    "description": "Description of project gavoters.",
+    "authors": [
+        {
+            "name": "James Jones",
+            "email": "jamjon3@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=5.4"        
+    },
+    "autoload": {
+        "psr-4" : {
+            "CF\\gavoters\\" : "src/"
+        }
+    }
+    
+}
