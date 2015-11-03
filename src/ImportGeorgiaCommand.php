@@ -56,7 +56,6 @@ class ImportGeorgiaCommand extends Command {
             while (($buffer = fgets($fp, 4096)) !== false) {
                 $output->writeln($buffer);
             }
-            $this->georgiaVoterService->initializeGeorgiaVoterTable();
         } else {
             $output->writeln("Zip File Problem");
         }
