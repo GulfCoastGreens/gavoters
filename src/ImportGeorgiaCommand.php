@@ -39,6 +39,7 @@ class ImportGeorgiaCommand extends Command {
         $zip = new \ZipArchive;
         $res = $zip->open($input->getArgument('zipFile'));
         if ($res === TRUE) {
+            $this->georgiaVoterService->initializeGeorgiaVoterTable();
             $compressedfiles = [];
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $compressedfiles[] = $zip->statIndex( $i );
@@ -53,13 +54,11 @@ class ImportGeorgiaCommand extends Command {
             $exportDate = \date("Y-m-d", $maxentry['mtime']);
             $fp = $zip->getStream($maxentry['name']);
             while (($buffer = fgets($fp, 4096)) !== false) {
-                echo $buffer;
+                $output->writeln($buffer);
             }
             $this->georgiaVoterService->initializeGeorgiaVoterTable();
         } else {
             $output->writeln("Zip File Problem");
         }
-        
-        $output->writeln($res);
     }
 }

@@ -58,12 +58,12 @@ class GeorgiaVoterService extends \GCG\Core\Connection {
     }
     public function initializeGeorgiaVoterTable() {
         $query = \file_get_contents("sql/GeorgiaVotersTable.sql");
-        echo $query;
-//        $stmt = $this->getConnection($this->connectionName)->pdo->prepare($query);
-//
-//        if ($stmt->execute())
-//             echo "Success";
-//        else 
-//             echo "Fail";
+        $stmt = $this->getConnection($this->connectionName)->pdo->prepare($query);
+
+        if ($stmt->execute()) {
+            echo "Success";
+        } else {
+            echo "Fail";
+        }
     }
 }
