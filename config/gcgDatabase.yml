@@ -1,0 +1,8 @@
+gcgDatabase:
+    gpga:
+        database_type: mysql
+        database_name: gpga
+        server: localhost
+        username: root
+        password:
+        charset: utf8

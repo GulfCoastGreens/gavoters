@@ -14,12 +14,14 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/GulfCoastGreens/gcg-connection/"
+            "url": "https://github.com/GulfCoastGreens/gcg-database.git"
         }
     ],
     "require": {
         "php": ">=5.4",
-        "gcg/gcg-database": "dev-master"
+        "gulfcoastgreens/gcg-database": "dev-master",
+        "symfony/console": "v2.7.6",
+        "kherge/box": "2.5.3"
     },
     "autoload": {
         "psr-4" : {

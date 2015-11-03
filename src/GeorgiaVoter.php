@@ -93,4 +93,56 @@ class GeorgiaVoter {
     public $MailRRPOBox;
     public $CombinedStreetAddr;
     public $ExportDate;
+    
+    public static function arrayToInstance($voter) {
+        $georgiaVoter = new self();
+        foreach($voter as $key => $value){
+            if(\property_exists($georgiaVoter, $key)) {
+                if(\in_array($key, [
+                    'VoterLastName',
+                    'VoterFirstName',
+                    'VoterMiddleMaiden',
+                    'VoterNameSuffix',
+                    'VoterNameTitle',
+                    'ResStreetName',
+                    'ResStreetSuffix',
+                    'ResCityName',
+                    'MailStreetName',
+                    'MailStreetSuffix',
+                    'MailCity',
+                    'CombinedStreetAddr'])) {
+                    $value = static::tidy($value);
+                }
+                $georgiaVoter->{$key} = $value;
+            }
+        }
+        return $georgiaVoter;
+    }
+    public static function tidy($text) {
+        return \implode(" ", \array_map(function($word) {
+            $word = \ucfirst(\strtolower($word));
+            //Specials like Mac, Mc etc
+            $specials = ["Mac", "Mc", "O'"];
+            foreach ($specials as $special) {
+                $pos = \stripos($word, $special);
+                if (($pos !== false) && ($pos == 0)) {
+                    $parts = \explode($special, $word);
+                    $word = $special . \ucfirst($parts[1]);
+                }
+            }
+            //...but not for some words that begin with "Mac"
+            // (make your own mind up about Macintosh, Maclure & Maclaren)
+            $specials = ["macken", "macclesfield", "machynlleth"];
+            if (\in_array(strtolower($word), $specials)) {
+                $word = \ucfirst(\strtolower($word));
+            }
+            //Let"s go lower case on some words
+            $specials = ["de", "la", "le", "on", "of", "and", "under", "upon"];
+            if (\in_array(strtolower($word), $specials)) {
+                $word = \strtolower($word);
+            }
+            return $word;
+        }, \explode(" ", \preg_replace("/\s+/"," ",\trim($text)))));
+    }
+
 }
